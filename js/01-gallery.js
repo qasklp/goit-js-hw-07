@@ -27,13 +27,15 @@ function handleClick(event) {
 
     const selectedImg = event.target.getAttribute('data-source');
 
-    const instance = basicLightbox.create(`<img src="${selectedImg}" width="800" height="600">`);
+    const instance = basicLightbox.create(`<img src="${selectedImg}" width="800" height="600">`, { onShow: () => document.addEventListener('keydown', escClose) , onClose: () => document.removeEventListener('keydown', escClose) });
     instance.show();
 
-    gallery.addEventListener('keydown', (event) => {
+    document.addEventListener('keydown', escClose)
+
+    function escClose(event) {
         if (event.key === "Escape") {
             instance.close()
         }
-    })
+    }
 }
 
